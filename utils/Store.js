@@ -1,32 +1,32 @@
-// import { createContext, useReducer } from "react";
+import { createContext, useReducer } from "react";
 
-// export const Store = createContext();
+export const Store = createContext();
 
-// const initialState = {
-//   cart: { cartItems: [] },
-// };
+const initialState = {
+  cart: { cartItems: [] },
+};
 
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case "ADD_TO_CART": {
-//       const newItem = action.payload;
-//       const existItem = state.cart.cartItems.find(
-//         (x) => x.slug === newItem.slug
-//       );
-//       const cartItems = existItem
-//         ? state.cart.cartItems.map((x) =>
-//             x.name === existItem.name ? newItem : x
-//           )
-//         : [...state.cart.cartItems, newItem];
-//       return { ...state, cart: { ...state.cart, cartItems } };
-//     }
-//     default:
-//       return state;
-//   }
-// }
+function reducer(state, action) {
+  switch (action.type) {
+    case "CART_ADD_ITEM": {
+      const newItem = action.payload;
+      const existItem = state.cart.cartItems.find(
+        (item) => item.slug === newItem.slug
+      );
+      const cartItems = existItem
+        ? state.cart.cartItems.map((item) =>
+            item.name === existItem.name ? newItem : item
+          )
+        : [...state.cart.cartItems, newItem];
+      return { ...state, cart: { ...state.cart, cartItems } };
+    }
+    default:
+      return state;
+  }
+}
 
-// export function StoreProvider({ childern }) {
-//   const [state, dispatch] = useReducer(reducer, initialState);
-//   const value = { state, dispatch };
-//   return <Store.Provider value={value}>{childern}</Store.Provider>;
-// }
+export function StoreProvider({ children }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const value = { state, dispatch };
+  return <Store.Provider value={value}>{children}</Store.Provider>;
+}
