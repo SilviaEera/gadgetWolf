@@ -18,7 +18,7 @@ const ProductScreen = () => {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
-    if (product.countInStock < quantity) {
+    if (product.contentInStock < quantity) {
       alert("Sorry. Product is out of stock");
       return;
     }
